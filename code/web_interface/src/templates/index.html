@@ -1,0 +1,54 @@
+<html>
+<head>
+<!--<script src="jquery-min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<!-- <script src="jquery-ui.js"></script> -->
+<script type="text/javascript">
+    	//	document.getElementById('demo').removeAttribute('value');
+		function startTime() {
+    		var today = new Date();
+    		var h = today.getHours();
+    		var m = today.getMinutes();
+    		var s = today.getSeconds();
+    		m = checkTime(m);
+		    s = checkTime(s);
+		    document.getElementById('txt').innerHTML =
+   			h + ":" + m + ":" + s;
+    		var t = setTimeout(startTime, 500);
+		}
+		function checkTime(i) {
+    		if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    		return i;
+		}
+	//document.getElementById("next_Step").click();
+	//$(function(){
+    //	$('.next_step').trigger('click');
+//});
+//$(function(){
+  //  window.location.href =$('a').attr('href');
+//});
+	window.setTimeout(function() {
+    	window.location.href = $('a').attr('href');
+	}, 5000);
+	function myFunction(b) {
+    	document.getElementById('demo').value = b;
+	}
+	function running() {
+    	document.getElementById('demo').removeAttribute('value');
+	}
+</script>
+</head>
+<body onload="myFunction({{ progress }});running();startTime();">
+<h1 style="text-align:center;text-decoration:underline;">{{ title }} </h1>
+	Current Time : <span style="font-weight:bold;" id="txt"></span>
+<a href="{{ site }}" class="next_step" onclick="" style="display:none;">Click me</a><br><br>
+<script>
+
+</script>
+<span style="font-size:30px;">Overall Progress : {{ progress }} % </span><br>
+<progress max="100" id="demo" style="width:1000px;height:50px;position:absolute;left:100px;">
+</progress>
+</body>
+
+</html>

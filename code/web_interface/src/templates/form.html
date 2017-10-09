@@ -1,0 +1,115 @@
+</!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		td,input{
+			font-size:20px;
+			background-color: orange;
+			color:black;
+			font-weight:bold;
+		}
+		input{
+			background-color:white;
+			color:black;
+		}
+		td{
+			padding:20px;	
+		}
+
+	</style>
+	<script type="text/javascript">
+		function running() {
+    		document.getElementById('demo').removeAttribute('value');
+		}
+		function startTime() {
+    		var today = new Date();
+    		var h = today.getHours();
+    		var m = today.getMinutes();
+    		var s = today.getSeconds();
+    		m = checkTime(m);
+		    s = checkTime(s);
+		    document.getElementById('txt').innerHTML =
+   			h + ":" + m + ":" + s;
+    		var t = setTimeout(startTime, 500);
+		}
+		function checkTime(i) {
+    		if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    		return i;
+		}
+	</script>
+	<title></title>
+</head>
+<body onload="startTime();">
+	<h1 style="text-decoration:underline;text-align:center;">Automatic Slide Transition Detection Portal</h1>
+	Current Time : <span style="font-weight:bold;" id="txt"></span>
+	<form action='/interface/download' method='GET'>{% csrf_token %}
+		<table style="position:relative;left:350px;">
+			<tr>
+    			<td>Enter link of lecture video* (req)</td><br>
+    			<td><input type="text" name="vlink" required /></td>
+    		</tr>
+    		<tr>
+    			<td>Youtube link<br>
+    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input type="radio"	name="videotype" value="1" checked />
+    			</td>
+    			<td>Other link<br>
+    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input type="radio"	name="videotype" value="2" />    				
+    			</td>
+    		</tr>
+    		<tr>
+        		<td>Enter pdf link *(opt)</td>
+    			<td><input type="text" name="pdflink" /></td>
+    		</tr>
+    		<tr>
+    			<td>Slide doesn't contain faces (suggested)<br>
+    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input type="radio"	name="category" value="1" checked />
+    			</td>
+    			<td>Slides contain faces <br>
+    				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    				<input type="radio"	name="category" value="2" />    				
+    			</td>
+    		</tr>
+    		<tr>
+        		<td>Enter your email address* (req)</td>
+    			<td><input type="email" name="email" required /></td>
+    		</tr>
+    	</table>
+        <input type="submit" name="formSubmit" value="Submit" onclick="running()" style="position:relative;left:550px;top:25px;"/>
+    </form>
+    <br><br>
+    <h2 style="text-align:center;" >Overall Progress : 0%</h2>
+    <progress value="0" max="100" id="demo" style="width:1000px;height:30px;position:absolute;left:150px;">
+		</progress><br>
+<h2>How to Use:</h2>
+<ol>
+<h3>
+<li>Enter the youtube video link of the video.</li>
+<li>Enter the link of the pdf if you already have the pdf.</li>
+<li>Enter the email address to which the results will be mailed.</li>
+<li>Categories:</li>
+	<ul>
+	<li>Category 1 : <p>If the slide doesn't contain any faces use this one for more accurate results.If the slides contain faces don't use this one as it assumes that the slide and the instructor are always displayed in different frames,i.e.,not simultaneously.It distinguishes between the slide frame and instructor frame by face detection technique.</p></li>
+	<li>Category 2 :<p> It doesn't distinguishes between slide frame and instructor frames.It assumes all of the same type.Thus,on selecting this type, the results may show other useless seconds also.</p></li>
+	</ul>
+<li>
+	The whole process consists of 5 sub-processes:
+	<ul>
+		<li>Downloading the video and the pdf (if given).</li>
+		<li>Converting the video and the pdf to suitable format.</li>
+		<li>Finding the suspectable where slide transition may have occurred.</li>
+		<li>Comparing the frames of these suspectable seconds with the pdf images (if given)</li>
+		<li>Sending the mail to given email-id as well allowing the files for downloading where ,
+		<ul>
+			<li>data.txt : it contains the list of all the suspectable seconds.</li>
+			<li>ans.csv : it contains the corresponding seconds and the slide number separated with commas.</li>
+		</ul>
+		</li>
+	</ul>
+</li>
+</ol>
+</h3>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+<script type="text/javascript">
+		//window.setTimeout(startTime(), 5000);
+		function startTime() {
+    		var today = new Date();
+    		var h = today.getHours();
+    		var m = today.getMinutes();
+    		var s = today.getSeconds();
+    		m = checkTime(m);
+		    s = checkTime(s);
+		    document.getElementById('txt').innerHTML =
+   			h + ":" + m + ":" + s;
+    		var t = setTimeout(startTime, 500);
+		}
+		function checkTime(i) {
+    		if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    		return i;
+		}
+</script>
+</head>
+
+<body onload="startTime();">
+	<h1 style="text-align:center;">We are done</h1>
+	Current Time : <span style="font-weight:bold;" id="txt"></span>
+	<h2 style="text-align:center;">Results has been mailed to the given email address.</h3>
+	<h2 style="text-align:center;"><a href="{{ site }}">Click here for going back to homepage.</a></h2>
+	<h2 style="text-align:center;" >Overall Progress : 100%</h2>
+	<div style="">
+		<progress value="100" max="100" id="demo" style="width:1000px;height:30px;position:absolute;left:100px;">
+		</progress>
+	</div><br>
+	<h3 style="">If the code didn't run for the whole video due to any technical reason then <a href="{{ restart }}">Click here</a> to run the code again.</h3>
+		<b>Transition Points file : </b><a href={{ data_file }}>{{ data_file }}</a><br><br>
+		<b>Slide Transition Points : </b></ul><a href={{ ans_file }}>{{ ans_file }}</a><br><br>
+	<!--
+	<b>Transition Seconds : </b>
+	{% for second in seconds %}
+		{{ second }},
+	{% endfor %}
+	<br><br>
+	<b>Seconds with slide numbers : </b>
+	{% for slide in slides %}
+		{{ slide }},
+	{% endfor %}-->
+	<b>Transition Seconds : </b> {{ sus_sec }} <br><br>
+	<b>Seconds with slide numbers : </b> {{ sus_sli }} <br><br>
+</body>
+</html>
