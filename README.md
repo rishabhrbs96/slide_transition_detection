@@ -1,0 +1,1 @@
+# auto_slide_transition_detection
